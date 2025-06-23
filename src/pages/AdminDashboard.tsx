@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ClimateWidget from '@/components/ClimateWidget';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const AdminDashboard = () => {
   const systemMetrics = [
@@ -52,6 +52,12 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <Link to="/admin/profile">
+                <Button variant="outline" size="sm">
+                  Profile
+                </Button>
+              </Link>
               <Badge className="bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200">
                 Admin
               </Badge>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, Shield, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ClimateWidget from '@/components/ClimateWidget';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const WorkerDashboard = () => {
   return (
@@ -29,9 +29,17 @@ const WorkerDashboard = () => {
                 <p className="text-gray-500 dark:text-gray-400">Worker ID: W001</p>
               </div>
             </div>
-            <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-              Worker
-            </Badge>
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <Link to="/worker/profile">
+                <Button variant="outline" size="sm">
+                  Profile
+                </Button>
+              </Link>
+              <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                Worker
+              </Badge>
+            </div>
           </div>
         </div>
       </div>

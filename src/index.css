@@ -97,23 +97,33 @@
   }
 }
 
-/* Dark mode gradient backgrounds */
-.dark {
-  background: linear-gradient(135deg, rgb(17, 24, 39) 0%, rgb(31, 41, 55) 50%, rgb(17, 24, 39) 100%);
-}
+/* Light mode as default - no special styling needed for light backgrounds */
 
-/* Custom scrollbar for dark theme */
-.dark ::-webkit-scrollbar {
+/* Custom scrollbar */
+::-webkit-scrollbar {
   width: 8px;
 }
 
+::-webkit-scrollbar-track {
+  background: rgb(243, 244, 246);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(156, 163, 175);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(107, 114, 128);
+}
+
+/* Dark mode scrollbar */
 .dark ::-webkit-scrollbar-track {
   background: rgb(31, 41, 55);
 }
 
 .dark ::-webkit-scrollbar-thumb {
   background: rgb(75, 85, 99);
-  border-radius: 4px;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
