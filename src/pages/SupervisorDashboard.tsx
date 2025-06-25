@@ -3,27 +3,23 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Users, ArrowLeft, Eye, Trophy } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Users, ArrowLeft, Eye, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SafetyMap from '@/components/SafetyMap';
 import ClimateWidget from '@/components/ClimateWidget';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const SupervisorDashboard = () => {
-  const teamStats = [
-    { label: 'Active Workers', value: '5', color: 'text-blue-600' },
-    { label: 'Active Alerts', value: '3', color: 'text-orange-600' },
-    { label: 'Avg Safety Score', value: '86', color: 'text-green-600' }
-  ];
-
-  const topPerformers = [
-    { name: 'David Chen', score: 94 },
-    { name: 'Mike Thompson', score: 92 },
-    { name: 'John Smith', score: 87 }
+  const workers = [
+    { name: 'Juan Pérez', score: 70, avatar: '👷' },
+    { name: 'María Gómez', score: 40, avatar: '👷‍♀️' },
+    { name: 'Carlos Ruíz', score: 85, avatar: '👷' }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Clean Header */}
+      {/* Header */}
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
@@ -31,51 +27,92 @@ const SupervisorDashboard = () => {
               <Link to="/">
                 <Button variant="ghost" size="sm" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
+                  Supervisores
                 </Button>
               </Link>
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  Team Overview
-                </h1>
-                <p className="text-gray-500 dark:text-gray-400">Real-time site monitoring</p>
-              </div>
             </div>
-            <Badge className="bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
-              Supervisor
-            </Badge>
+            <div className="flex items-center gap-6">
+              <span className="text-gray-600 dark:text-gray-400">Home</span>
+              <span className="text-gray-600 dark:text-gray-400">Dashboard</span>
+              <span className="text-gray-600 dark:text-gray-400">Reports</span>
+              <ThemeToggle />
+              <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Quick Stats */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          {teamStats.map((stat, index) => (
-            <Card key={index} className="bg-white dark:bg-gray-800 border-0 shadow-sm">
-              <CardContent className="p-8 text-center">
-                <div className={`text-3xl font-bold ${stat.color} mb-2`}>
-                  {stat.value}
+        {/* Workers Overview */}
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-12">
+          <CardContent className="p-8">
+            <div className="grid md:grid-cols-3 gap-8 mb-8">
+              {workers.map((worker, index) => (
+                <div key={index} className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">{worker.avatar}</span>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{worker.name}</h3>
+                  <Progress value={worker.score} className="mb-2" />
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{worker.score}%</p>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300">{stat.label}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Safety Alerts */}
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-12">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-900 dark:text-white">
+              <AlertTriangle className="h-6 w-6 text-red-500" />
+              Alertas de seguridad en el sitio
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
+              <AlertTriangle className="h-6 w-6 text-red-500" />
+              <span className="font-medium text-gray-900 dark:text-white">2 incidentes</span>
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Main Map */}
+          {/* Performance Table */}
           <div className="lg:col-span-3">
-            <Card className="bg-white dark:bg-gray-800 border-0 shadow-sm">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-900 dark:text-white">
-                  <Eye className="h-6 w-6 text-blue-500" />
-                  Live Site Monitor
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="h-[500px]">
-                  <SafetyMap />
+            <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <CardContent className="p-8">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200 dark:border-gray-700">
+                        <th className="text-left py-4 text-gray-600 dark:text-gray-400">Nombre</th>
+                        <th className="text-left py-4 text-gray-600 dark:text-gray-400">Horas trabajadas</th>
+                        <th className="text-left py-4 text-gray-600 dark:text-gray-400">Tareas completadas</th>
+                        <th className="text-left py-4 text-gray-600 dark:text-gray-400">Eficiencia</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-gray-100 dark:border-gray-800">
+                        <td className="py-4 text-gray-900 dark:text-white">Juan Pérez</td>
+                        <td className="py-4 text-gray-900 dark:text-white">30</td>
+                        <td className="py-4 text-gray-900 dark:text-white">21 h</td>
+                        <td className="py-4 text-gray-900 dark:text-white">43%</td>
+                      </tr>
+                      <tr className="border-b border-gray-100 dark:border-gray-800">
+                        <td className="py-4 text-gray-900 dark:text-white">María Gómez</td>
+                        <td className="py-4 text-gray-900 dark:text-white">40</td>
+                        <td className="py-4 text-gray-900 dark:text-white">40 c</td>
+                        <td className="py-4 text-gray-900 dark:text-white">85%</td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 text-gray-900 dark:text-white">Carlos Ruiz</td>
+                        <td className="py-4 text-gray-900 dark:text-white">85</td>
+                        <td className="py-4 text-gray-900 dark:text-white">35 c</td>
+                        <td className="py-4 text-gray-900 dark:text-white">45%</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
@@ -84,35 +121,6 @@ const SupervisorDashboard = () => {
           {/* Right Panel */}
           <div className="space-y-8">
             <ClimateWidget />
-            
-            {/* Top Performers */}
-            <Card className="bg-white dark:bg-gray-800 border-0 shadow-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-lg font-semibold text-gray-900 dark:text-white">
-                  <Trophy className="h-5 w-5 text-yellow-500" />
-                  Top Performers
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {topPerformers.map((worker, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-semibold text-blue-600 dark:text-blue-300">
-                          {index + 1}
-                        </span>
-                      </div>
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {worker.name}
-                      </span>
-                    </div>
-                    <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                      {worker.score}
-                    </Badge>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>
