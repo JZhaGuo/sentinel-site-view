@@ -32,9 +32,9 @@ const SupervisorDashboard = () => {
               </Link>
             </div>
             <div className="flex items-center gap-6">
-              <span className="text-gray-600 dark:text-gray-400">Home</span>
+              <span className="text-gray-600 dark:text-gray-400">Inicio</span>
               <span className="text-gray-600 dark:text-gray-400">Dashboard</span>
-              <span className="text-gray-600 dark:text-gray-400">Reports</span>
+              <span className="text-gray-600 dark:text-gray-400">Reportes</span>
               <ThemeToggle />
               <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
             </div>
@@ -44,7 +44,7 @@ const SupervisorDashboard = () => {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Workers Overview */}
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-12">
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-8">
           <CardContent className="p-8">
             <div className="grid md:grid-cols-3 gap-8 mb-8">
               {workers.map((worker, index) => (
@@ -61,18 +61,16 @@ const SupervisorDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Safety Alerts */}
-        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-12">
+        {/* Safety Map */}
+        <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 mb-8">
           <CardHeader>
-            <CardTitle className="flex items-center gap-3 text-xl font-semibold text-gray-900 dark:text-white">
-              <AlertTriangle className="h-6 w-6 text-red-500" />
-              Alertas de seguridad en el sitio
+            <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
+              Mapa de Seguridad en Tiempo Real
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
-              <AlertTriangle className="h-6 w-6 text-red-500" />
-              <span className="font-medium text-gray-900 dark:text-white">2 incidentes</span>
+            <div className="h-96 relative">
+              <SafetyMap />
             </div>
           </CardContent>
         </Card>
@@ -81,6 +79,11 @@ const SupervisorDashboard = () => {
           {/* Performance Table */}
           <div className="lg:col-span-3">
             <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
+                  Rendimiento del Equipo
+                </CardTitle>
+              </CardHeader>
               <CardContent className="p-8">
                 <div className="overflow-x-auto">
                   <table className="w-full">
@@ -95,21 +98,33 @@ const SupervisorDashboard = () => {
                     <tbody>
                       <tr className="border-b border-gray-100 dark:border-gray-800">
                         <td className="py-4 text-gray-900 dark:text-white">Juan Pérez</td>
-                        <td className="py-4 text-gray-900 dark:text-white">30</td>
-                        <td className="py-4 text-gray-900 dark:text-white">21 h</td>
-                        <td className="py-4 text-gray-900 dark:text-white">43%</td>
+                        <td className="py-4 text-gray-900 dark:text-white">7.5h</td>
+                        <td className="py-4 text-gray-900 dark:text-white">12 tareas</td>
+                        <td className="py-4">
+                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                            85%
+                          </Badge>
+                        </td>
                       </tr>
                       <tr className="border-b border-gray-100 dark:border-gray-800">
                         <td className="py-4 text-gray-900 dark:text-white">María Gómez</td>
-                        <td className="py-4 text-gray-900 dark:text-white">40</td>
-                        <td className="py-4 text-gray-900 dark:text-white">40 c</td>
-                        <td className="py-4 text-gray-900 dark:text-white">85%</td>
+                        <td className="py-4 text-gray-900 dark:text-white">6.2h</td>
+                        <td className="py-4 text-gray-900 dark:text-white">8 tareas</td>
+                        <td className="py-4">
+                          <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                            72%
+                          </Badge>
+                        </td>
                       </tr>
                       <tr>
                         <td className="py-4 text-gray-900 dark:text-white">Carlos Ruiz</td>
-                        <td className="py-4 text-gray-900 dark:text-white">85</td>
-                        <td className="py-4 text-gray-900 dark:text-white">35 c</td>
-                        <td className="py-4 text-gray-900 dark:text-white">45%</td>
+                        <td className="py-4 text-gray-900 dark:text-white">8.1h</td>
+                        <td className="py-4 text-gray-900 dark:text-white">15 tareas</td>
+                        <td className="py-4">
+                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                            92%
+                          </Badge>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -120,6 +135,28 @@ const SupervisorDashboard = () => {
 
           {/* Right Panel */}
           <div className="space-y-8">
+            {/* Safety Alerts */}
+            <Card className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3 text-lg font-semibold text-gray-900 dark:text-white">
+                  <AlertTriangle className="h-5 w-5 text-red-500" />
+                  Alertas de Seguridad
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                    <span className="text-sm text-gray-900 dark:text-white">Trabajador en zona peligrosa</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                    <span className="text-sm text-gray-900 dark:text-white">Precaución requerida</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             <ClimateWidget />
           </div>
         </div>
